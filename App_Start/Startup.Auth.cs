@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -6,10 +6,14 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using MVC_template.Models;
+using Microsoft.Owin.Security.Twitter;
+using Microsoft.Owin.Security;
 
 namespace MVC_template
 {
-    public partial class Startup
+  // Twitter Token
+  // AAAAAAAAAAAAAAAAAAAAAA41KQEAAAAA59BeK%2BcoTiLrERZ%2F50HojoOVT0w%3DCBScxUUU4w2pWX9IYjPpo77zCMirrN8KiLD7sIADC0XXk4bxnN
+  public partial class Startup
     {
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
@@ -50,19 +54,37 @@ namespace MVC_template
             //    clientId: "",
             //    clientSecret: "");
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            app.UseTwitterAuthentication(
+               consumerKey: "iPSiJoU1hjm9M69B2XqZxHIOS",
+               consumerSecret: "PrUkrScoM7A3443hroE85B3pw4CAr8ClTjTnQ4vHDkv7y0rUEb");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+        // This allows you to use another certificate authority to verify twitter.
+        // This solves  abug in twitter sign in where there certificate server wouldn't verify
+        // No longer an issue
+        //app.UseTwitterAuthentication(new TwitterAuthenticationOptions
+        //{
+        //  ConsumerKey = "iPSiJoU1hjm9M69B2XqZxHIOS",
+        //  ConsumerSecret = "PrUkrScoM7A3443hroE85B3pw4CAr8ClTjTnQ4vHDkv7y0rUEb",
+        //  BackchannelCertificateValidator = new CertificateSubjectKeyIdentifierValidator(new[]
+        //  {
+        //      "A5EF0B11CEC04103A34A659048B21CE0572D7D47", // VeriSign Class 3 Secure Server CA - G2
+        //      "0D445C165344C1827E1D20AB25F40163D8BE79A5", // VeriSign Class 3 Secure Server CA - G3
+        //      "7FD365A7C2DDECBBF03009F34339FA02AF333133", // VeriSign Class 3 Public Primary Certification Authority - G5
+        //      "39A55D933676616E73A761DFA16A7E59CDE66FAD", // Symantec Class 3 Secure Server CA - G4
+        //      "5168FF90AF0207753CCCD9656462A212B859723B", //DigiCert SHA2 High Assurance Server C‎A 
+        //      "B13EC36903F8BF4701D498261A0802EF63642BC3"  //DigiCert High Assurance EV Root CA
+        //  })
+        //});
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
-        }
+        //app.UseFacebookAuthentication(
+        //   appId: "",
+        //   appSecret: "");
+
+        app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+        {
+          ClientId = "575126442765-m5q0d0h11du52qiq98si6rn1ea3ha3d4.apps.googleusercontent.com",
+          ClientSecret = "42UFmrec9VbHqboPEWMZpnrQ"
+        });
+    }
     }
 }
